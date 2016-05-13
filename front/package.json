@@ -1,0 +1,47 @@
+{
+  "name": "r-chat",
+  "version": "1.0.0",
+  "description": "a chatroom application",
+  "main": "app.js",
+  "dependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.3",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.5.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "gulp": "*",
+    "koa": "1.1.2",
+    "koa-bodyparser": "2.0.1",
+    "koa-send": "*",
+    "koa-errorhandler": "0.1.1",
+    "koa-gzip": "0.1.0",
+    "koa-logger": "1.3.0",
+    "koa-router": "*",
+    "koa-static": "*",
+    "mongoose": "^4.4.12",
+    "node-uuid": "^1.4.7",
+    "react": "15.0.2",
+    "react-dom": "15.0.2",
+    "react-redux": "4.4.5",
+    "react-router": "^2.0.0",
+    "redux": "^3.3.1",
+    "socket.io": "*",
+    "socket.io-client":"1.4.6",
+    "webpack": "^1.12.14",
+    "material-ui":"0.15.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "joursion",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "gulp-react": "^3.1.0",
+    "gulp-clean-css": "*",
+    "gulp-minify": "*"
+  }
+}

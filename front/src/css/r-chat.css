@@ -1,0 +1,30 @@
+
+a {font-size:16px}
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {color: red; text-decoration:underline;}
+
+                                                                                                                                                                                /*index page*
+
+li {
+    list-style: none;
+}
+
+/*message*/
+
+.One{
+    display: flex;
+    align-items: flex-start;
+}
+
+.One .msg_avatar{
+    margin-right: 1em;
+    width:100px;
+    height: 100px;
+    border-radius: 100px;
+}
+
+.One .msg_msg{
+    flex:1;
+    background-color: #d8d8d8;
+}
