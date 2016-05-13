@@ -145,7 +145,7 @@
 	        value: function handleRegister(username, password) {
 	            var _this2 = this;
 	
-	            fetch("http://localhost:5000/api/register", {
+	            fetch(_default2.default.apiUrl + "/register", {
 	                method: 'POST',
 	                headers: {
 	                    'Accept': 'application/json',
@@ -159,7 +159,13 @@
 	                return res.json();
 	            }).then(function (data) {
 	                console.log(data);
-	                _this2.porps.history.push('/login');
+	                if (data.error) {
+	                    alert(data.error);
+	                    Store.dispatch(Action.error(data.error));
+	                } else {
+	                    Store.dispatch(Action.error(undefined));
+	                    _this2.props.history.push('/login');
+	                }
 	            }).catch(function (e) {
 	                return console.log('handleRegister error', e);
 	            });
@@ -177,7 +183,7 @@
 	        value: function handleLogin(username, password) {
 	            var _this3 = this;
 	
-	            fetch("http://localhost:5000/api/login", {
+	            fetch("http://localhost:5000/api" + "/login", {
 	                method: 'POST',
 	                headers: {
 	                    'Accept': 'application/json',
@@ -212,7 +218,7 @@
 	    }, {
 	        key: 'handleRegInfoCheck',
 	        value: function handleRegInfoCheck(username, password) {
-	            fetch("http:localhost:5000/api/regcheck", {
+	            fetch(_default2.default.apiUrl + "/regcheck", {
 	                method: 'POST',
 	                headers: {
 	                    'Accept': 'application/json',
@@ -238,7 +244,7 @@
 	        key: 'handleSendMessage',
 	        value: function handleSendMessage(message, Mto, user, time) {
 	            if (Mto == 'all') {
-	                fetch("http://localhost:5000/api/message", {
+	                fetch(_default2.default.apiUrl + "/message", {
 	                    method: 'POST',
 	                    headers: {
 	                        'Accept': 'application/json',
@@ -271,7 +277,7 @@
 	        value: function componentWillMount() {
 	            var token = window.sessionStorage.getItem('token');
 	            if (token) {
-	                fetch("http://localhost:5000/api/token", {
+	                fetch(_default2.default.apiUrl + "/token", {
 	                    method: 'POST',
 	                    headers: {
 	                        'Accept': 'application/json',
@@ -290,7 +296,7 @@
 	                });
 	            }
 	
-	            fetch("http://localhost:5000/api/message", {
+	            fetch(_default2.default.apiUrl + "/message", {
 	                method: 'GET',
 	                mode: "cors"
 	            }).then(function (res) {
@@ -319,10 +325,12 @@
 	            var message = _props.message;
 	            var user = _props.user;
 	            var isLogin = _props.isLogin;
+	            var error = _props.error;
 	
 	            message = message || _default2.default.messages;
 	            user = user || _default2.default.user;
 	            isLogin = isLogin || _default2.default.isLogin;
+	            error = error || _default2.default.error;
 	            var props = {
 	                index: {
 	                    user: user,
@@ -331,10 +339,12 @@
 	                    handleSendMessage: this.handleSendMessage.bind(this)
 	                },
 	                register: {
+	                    error: error,
 	                    handleRegister: this.handleRegister.bind(this),
 	                    handleRegInfoCheck: this.handleRegInfoCheck.bind(this)
 	                },
 	                login: {
+	                    error: error,
 	                    handleLogin: this.handleLogin.bind(this)
 	                }
 	            };
@@ -362,7 +372,8 @@
 	    return {
 	        message: state.message,
 	        user: state.user,
-	        isLogin: state.isLogin
+	        isLogin: state.isLogin,
+	        error: state.error
 	    };
 	}
 	
@@ -36245,10 +36256,10 @@
 	var Header = function (_Component) {
 	    _inherits(Header, _Component);
 	
-	    function Header() {
+	    function Header(props, context) {
 	        _classCallCheck(this, Header);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props, context));
 	    }
 	
 	    _createClass(Header, [{
@@ -50437,12 +50448,18 @@
 	                _react2.default.createElement(
 	                    'label',
 	                    null,
-	                    '版本: v1.1.4'
+	                    '版本: v0.0.1'
+	                ),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    '功能: 简单的注册登陆,文字发送'
 	                ),
 	                _react2.default.createElement('br', null),
 	                _react2.default.createElement(
 	                    'a',
-	                    { href: 'https://github.com/Joursion/r-chat' },
+	                    { href: 'https://github.com/Joursion/r-ct' },
 	                    _react2.default.createElement(
 	                        'svg',
 	                        { viewBox: '0 0 16 16', height: '28', width: '28' },
@@ -51132,6 +51149,10 @@
 	                    }
 	                ]*/
 	            }
+	        case Action.types.Error:
+	            {
+	                return Object.assign({}, state, { error: action.message });
+	            }
 	        default:
 	            {
 	                return state;
@@ -51178,7 +51199,8 @@
 	        SetLogin: 'SetLogin',
 	        SetUserInfo: 'SetUserInfo',
 	        PersonalMessage: 'PersonalMessage',
-	        GroupMessage: 'GroupMessage'
+	        GroupMessage: 'GroupMessage',
+	        Error: 'Error'
 	    },
 	
 	    setUser: function setUser(user) {
@@ -51217,6 +51239,13 @@
 	        return {
 	            type: this.types.SetLogin,
 	            status: status
+	        };
+	    },
+	
+	    error: function error(message) {
+	        return {
+	            type: this.types.Error,
+	            error: message
 	        };
 	    }
 	};
@@ -58514,25 +58543,36 @@
 	                _react2.default.createElement(
 	                    "h1",
 	                    null,
-	                    "get messages"
+	                    "GET /api/message"
 	                ),
-	                "无参数 示例: ",
+	                "无参数 返回格式 示例: ",
 	                _react2.default.createElement(
 	                    "a",
 	                    { href: "" },
 	                    " /api/messages "
 	                ),
+	                "{success: true, data[{content:'test', id:''....}]}",
 	                _react2.default.createElement(
 	                    "h1",
 	                    null,
-	                    "get user"
+	                    "POST /api/message"
 	                ),
-	                "- 示例: ",
+	                "user:",
+	                "{username: String, avatar: String, time: Date, content: String}",
+	                "示例: ",
 	                _react2.default.createElement(
 	                    "a",
 	                    { href: "" },
 	                    " /api/messages "
-	                )
+	                ),
+	                "返回数据: ",
+	                "{success:true, data:req.data}",
+	                _react2.default.createElement(
+	                    "h1",
+	                    null,
+	                    "POST /api/login"
+	                ),
+	                "user: String, password: String 或者 token: String 返回用户数据."
 	            );
 	        }
 	    }]);
@@ -58561,7 +58601,9 @@
 	        avatar: "https://tse1-mm.cn.bing.net/th?id=OIP.M4b8881c6a7f535a4fd9e131e131ef550o0&w=113&h=110&c=7&rs=1&qlt=90&pid=3.1&rm=2"
 	    },
 	    messages: [],
-	    isLogin: false
+	    isLogin: false,
+	    apiUrl: "http://localhost:5000/api",
+	    error: undefined
 	};
 
 /***/ }

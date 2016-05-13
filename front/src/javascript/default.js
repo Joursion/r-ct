@@ -9,5 +9,6 @@ module.exports = {
     },
     messages: [],
     isLogin: false,
-    apiUrl: "http://localhost:5000/api"
+    apiUrl: "http://localhost:5000/api",
+    error: undefined
 };

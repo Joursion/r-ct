@@ -17,10 +17,7 @@
     "koa-router-cache": "0.3.0",
     "koa-static": "*",
     "mongoose": "^4.4.12",
-    "node-uuid": "^1.4.7",
-    "socket.io": "*",
-    "socket.io-client": "1.4.6",
-    "webpack": "^1.12.14"
+    "node-uuid": "^1.4.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

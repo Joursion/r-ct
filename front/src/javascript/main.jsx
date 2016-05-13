@@ -36,7 +36,7 @@ class App extends Component {
     }
 
     handleRegister (username, password) {
-        fetch("http://localhost:5000/api/register",{
+        fetch(DefaultInfo.apiUrl + "/register",{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -49,7 +49,13 @@ class App extends Component {
         }).then(res => res.json())
         .then(data => {
                 console.log(data);
-                this.props.history.push('/login');
+                if(data.error) {
+                    alert(data.error);
+                    Store.dispatch(Action.error(data.error));
+                } else {
+                    Store.dispatch(Action.error(undefined));
+                    this.props.history.push('/login');
+                }
             })
         .catch(e => console.log('handleRegister error',e));
     }
@@ -63,7 +69,7 @@ class App extends Component {
     }
 
     handleLogin (username, password) {
-        fetch("http://localhost:5000/api/login",{
+        fetch("http://localhost:5000/api" + "/login",{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -95,7 +101,7 @@ class App extends Component {
     }
 
     handleRegInfoCheck(username, password) {
-        fetch("http:localhost:5000/api/regcheck",{
+        fetch(DefaultInfo.apiUrl + "/regcheck",{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -114,7 +120,7 @@ class App extends Component {
 // Mto:the message to 
     handleSendMessage (message, Mto, user, time) {
         if (Mto == 'all') {
-            fetch("http://localhost:5000/api/message",{
+            fetch(DefaultInfo.apiUrl + "/message",{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -143,7 +149,7 @@ class App extends Component {
     componentWillMount() {
         let token = window.sessionStorage.getItem('token');
         if (token) {
-            fetch("http://localhost:5000/api/token",{
+            fetch(DefaultInfo.apiUrl + "/token",{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -162,7 +168,7 @@ class App extends Component {
 
         }
         
-        fetch("http://localhost:5000/api/message", {
+        fetch(DefaultInfo.apiUrl + "/message", {
             method: 'GET',
             mode: "cors"
         }).then(res => res.json())
@@ -186,10 +192,11 @@ class App extends Component {
     }
 
     render() {
-        let { message, user , isLogin} = this.props;
+        let { message, user , isLogin, error} = this.props;
         message = message || DefaultInfo.messages;
         user = user || DefaultInfo.user;
         isLogin = isLogin || DefaultInfo.isLogin;
+        error = error || DefaultInfo.error;
         const props = {
             index: {
                 user,
@@ -198,10 +205,12 @@ class App extends Component {
                 handleSendMessage: this.handleSendMessage.bind(this)
             },
             register: {
+                error,
                 handleRegister: this.handleRegister.bind(this),
                 handleRegInfoCheck: this.handleRegInfoCheck.bind(this)
             },
             login: {
+                error,
                 handleLogin: this.handleLogin.bind(this)
             }
         };
@@ -226,7 +235,8 @@ function mapStateToProps(state) {
     return {
         message: state.message,
         user: state.user,
-        isLogin: state.isLogin
+        isLogin: state.isLogin,
+        error: state.error
     }
 }
 

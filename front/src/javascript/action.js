@@ -9,7 +9,8 @@ module.exports = {
         SetLogin: 'SetLogin',
         SetUserInfo: 'SetUserInfo',
         PersonalMessage: 'PersonalMessage',
-        GroupMessage: 'GroupMessage'
+        GroupMessage: 'GroupMessage',
+        Error: 'Error'
     },
 
     setUser: function (user) {
@@ -48,6 +49,13 @@ module.exports = {
         return {
             type: this.types.SetLogin,
             status: status
+        }
+    },
+    
+    error: function (message) {
+        return {
+            type: this.types.Error,
+            error: message
         }
     }
 };

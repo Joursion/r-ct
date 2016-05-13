@@ -6,10 +6,10 @@ var errorHandler = require('koa-errorhandler');
 var serve = require('koa-static');
 var logger = require('koa-logger');
 var fs = require('fs');
-var Io = require('socket.io');
 var gzip = require('koa-gzip');
 var st = require('./router/app.js');
 var cors = require('koa-cors');
+var config = require('./config.js');
 
 const app = Koa();
 const port = 5000;
@@ -20,22 +20,6 @@ app.use(serve(__dirname));
 app.use(logger());
 
 var server = require('http').createServer(app.callback());
-var io = Io(server);
-
-io.on('connection', function (socket) {
-    console.log('is connection');
-    socket.on('ison', function (data) {
-        console.log(data);
-    });
-    socket.on('send', function (data) {
-        console.log('recieve send', data);
-        socket.broadcast.emit('new',{
-            group: 'all',
-            data : data
-        });
-        console.log('new',data);
-    });
-});
 
 app.use(errorHandler());
 app.use(bodyParser());

@@ -1,6 +1,6 @@
-## r-chat
+## r-ct 前端
 
-使用react.js, mongodb 和 koa 的一个聊天室应用
+使用react.js, mongodb 和 koa 的一个简易的聊天室应用
 
 ## Install
 1. cloen项目 git clone https://github.com/Joursion/r-ct.git

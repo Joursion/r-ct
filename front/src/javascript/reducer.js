@@ -51,6 +51,9 @@ function reducer (state = {}, action) {
                }
            ]*/
         }
+        case Action.types.Error:{
+            return Object.assign({}, state, {error: action.message});
+        }
         default: {
             return state;
         }
