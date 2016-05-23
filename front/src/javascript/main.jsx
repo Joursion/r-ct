@@ -69,7 +69,7 @@ class App extends Component {
     }
 
     handleLogin (username, password) {
-        fetch("http://localhost:5000/api" + "/login",{
+        fetch(DefaultInfo.apiUrl + "/login",{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -133,7 +133,7 @@ class App extends Component {
                     time: time
                 })
             }).then(res => res.text())
-            .then(data => console.log(data))
+            //.then(data => console.log(data))
             .catch(e => console.log('error',e));
 
             let socket = io();
@@ -182,7 +182,7 @@ class App extends Component {
 
         let socket = io();
         socket.on('new', data => {
-            console.log(data);
+           // console.log(data);
             Store.dispatch(Action.groupMessage(data.group, data.data.message, data.data.user, data.data.time));
         });
     }

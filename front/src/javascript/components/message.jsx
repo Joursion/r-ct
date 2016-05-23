@@ -19,15 +19,17 @@ export default class Message extends Component {
     * */
     render() {
 
-        let { message } = this.props;
+        let { message, user } = this.props;
        // console.log('message', message);
         let oneStyle = {
-            one:{
+            left:{
                 display: "flex",
                 alignItems: "flex-start",
                 margin:0,
-                marginTop:10,
-                height: "80%"
+                marginTop:10
+            },
+            right:{
+                
             },
             info:{
                 color: "#8C8A8A"
@@ -55,7 +57,9 @@ export default class Message extends Component {
         };
         
         return (
-            <div style = { oneStyle.one } >
+            <div style = { 
+                oneStyle.left 
+            } >
                 <img src={ message.user.avatar } style={oneStyle.avatar}/>
                 <div style={ oneStyle.content }>
                     <div style={oneStyle.info}>

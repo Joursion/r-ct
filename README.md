@@ -8,7 +8,8 @@
 1. 克隆项目 git clone https://github.com/Joursion/r-ct.git
 2. 进入项目目录 cd r-ct
 3. 分别在front/server中 , 安装依赖包 npm install
-4. 分别运行前后端 
+4. 在front/src/javascript/default.js ,server/config.js 修改相关配置
+5. 分别运行前后端 
 
 ## 项目目录
 ```

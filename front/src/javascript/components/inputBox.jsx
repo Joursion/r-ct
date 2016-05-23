@@ -21,6 +21,15 @@ export default class InputBox extends Component {
         super(props, context);
     }
 
+    getDateStr(dat) {
+        let y = dat.getFullYear();
+        let m = dat.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        let d = dat.getDate();
+        d = d < 10 ? '0' + d : d;
+        let h = dat.get
+        return y + '-' + m + '-' + d;
+    }
     getMessage() {
         let input = this.refs.inputMessage;
         let message = input.value;
@@ -28,12 +37,12 @@ export default class InputBox extends Component {
         //let D = new Date();
         //let time = D.getMonth()  + 1 + '-' + D.getDate() + '  '
          //   + D.getHours() + ':' + D.getMinutes() + ':' + D.getSeconds();
-        let time = Date.now();
+        let time = new Date();
         input.value = "";
         return {
             Mto: Mto,
             message: message,
-            time: time
+            time: time.toUTCString()
         };
     }
 

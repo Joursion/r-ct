@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 var messageSchema = new Schema({
     content: {type: String},
-    time: {type: Date, default: Date.now()},
+    time: {type: String},
     user: {
         username: {type: String},
         avatar: {type: String}
