@@ -1,6 +1,6 @@
 ## r-ct
 
-和 <a href="https://github.com/Joursion/r-chat">r-chat</a>基本类似. r-ch 使用前后端分离.
+和 <a href="https://github.com/Joursion/r-chat">r-chat</a>基本类似. r-ct 使用前后端分离.
 前端 koa + react.js
 后端 koa
 

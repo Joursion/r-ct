@@ -36441,38 +36441,6 @@
 	    }
 	
 	    _createClass(Login, [{
-	        key: 'infoCheck',
-	        value: function infoCheck(username, password) {
-	            if (username === "" || password === "") {
-	                return { type: "error", content: "用户名或密码不能为空" };
-	            }
-	        }
-	    }, {
-	        key: 'showErrMsg',
-	        value: function showErrMsg(type, content) {
-	            if (type === 'success') {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { style: { color: 'green' } },
-	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        content
-	                    )
-	                );
-	            } else if (type === 'error') {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { style: { color: 'red' } },
-	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        content
-	                    )
-	                );
-	            }
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var handleLogin = this.props.handleLogin;
@@ -50406,7 +50374,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	'use direct';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true

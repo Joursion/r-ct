@@ -4,27 +4,6 @@ import React, { Component, ProTypes } from 'react';
 import LoginTextFile from '../components/loginBox.jsx';
 
 export default class Login extends Component {
-    infoCheck (username, password) {
-        if (username === "" || password === "") {
-            return {type: "error", content: "用户名或密码不能为空"};
-        }
-    }
-    showErrMsg (type, content) {
-        if (type === 'success') {
-            return (
-                <div style = {{color: 'green'}}>
-                    <span>{ content }</span>
-                </div>
-            )
-        } else if (type === 'error') {
-            return (
-                <div style = {{color: 'red'}}>
-                    <span>{ content }</span>
-                </div>
-            )
-        }
-    }
-    
     render() {
 
         const { handleLogin } = this.props;
