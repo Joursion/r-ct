@@ -1,50 +1,97 @@
 'use strict';
 
 import React, { Component, ProTypes } from 'react';
-import LoginTextFile from '../components/loginBox.jsx';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class Login extends Component {
-    render() {
+    
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            input_err: undefined,
+            pwd_err: undefined
+        }
+    }
 
+    getChildContext() {
+        return { muiTheme: getMuiTheme(baseTheme) };
+    }
+    
+     vaildCheck (username, password) {
+        
+        let name_length = username.length;
+        let pwd_length = password.length;
+        console.log(name_length, pwd_length);
+        if (name_length < 2 || name_length > 20) {
+            this.setState({input_err: "用户名需要大于2个字符小于20个字符"});
+            return false;
+        } else {
+            this.setState( {input_err: undefined} );
+        }
+        
+        if (pwd_length < 6 || pwd_length > 12) {
+            this.setState({pwd_err: "密码应大于6位小于12位"});
+            return false;
+        } else {
+            this.setState({pwd_err: undefined});
+        }
+        return true;
+        
+        // if(name_length >=2 && name_length <= 20 && pwd_length >=6 && pwd_length <= 12) {
+        //     this.setState({btn_disabled: false});
+        //     return false;
+        // } else {
+        //     this.setState({btn_disabled: true});
+        //     return true;
+        // }
+    }
+    
+    render() {
         const { handleLogin } = this.props;
         let style = {
-            form:{
-                margin: "0 auto",
-                width: 210,
-                marginTop:100
-            },
-            input:{
-                border: "1px solid #e6e6e6",
-                fontSize: 14,
-                marginBottom:10,
-                height:30,
-                width: 210,
-                paddingLeft:5
-            }
+            margin: "0 auto",
+            width: 256,
+            marginTop: 100
         };
-       // console.log(handleLogin);
-    //   <input type="text" ref="username" placeholder="用户名" />
-                    // <input type="password" ref="password" placeholder="密码" />
-      /*  <form style={style.form}>
-            <input style={style.input} type="text" ref="username" placeholder="用户名" />
-            <input style={style.input} type="password" ref="password" placeholder="密码" />
-            <br />
-            <button className="btn" onClick = { e => {
-                        let username = this.refs.username.value;
-                        let password = this.refs.password.value;
-                        handleLogin(username, password);
-                    }}
-                > 登录 </button>
-            <button className="btn" onClick = { e => {
-                        this.props.history.push('/register');
-                    }}
-                > 注册 </button>
-        </form>*/
-
+        
         return (
-            <div>
-                <LoginTextFile handleLogin={handleLogin}/>
+             <div style={style}>
+                <TextField
+                    hintText="请在10个字符内"
+                    floatingLabelText="用户名"
+                    type="text"
+                    ref="username"
+                    onChange = { this._onChange }
+                    errorText = {this.state.input_err}
+                    /><br />
+                <TextField
+                    hintText="6-12英文和数字"
+                    floatingLabelText="密码"
+                    type="password"
+                    ref="password"
+                    onChange = { this._onChange}
+                    errorText = {this.state.pwd_err}
+                    /><br />
+                <RaisedButton onMouseDown = {
+                        e => {
+                        let username = this.refs.username.getValue();
+                        let password = this.refs.password.getValue();
+                        if (!this.vaildCheck.bind(this)(username, password)) {
+                            return ;
+                        }
+                        console.log('login', username, password);
+                        handleLogin(username, password);
+                    }
+                } label="登陆"  ref="btn_login"/>
             </div>
         )
     }
 }
+
+Login.childContextTypes = {
+    muiTheme: React.PropTypes.object.isRequired
+};

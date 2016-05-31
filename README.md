@@ -40,7 +40,9 @@
 - addComponentAsRefTo(...): Only a ReactOwner can have refs. You might be adding 
   a ref to a component that was not created inside a component\'s render method, or you have multiple copies of React loaded.
   
-解决方法 <a href="https://gist.github.com/jimfb/4faa6cbfb1ef476bd105"> 详见</a>
+1. 解决方法 <a href="https://gist.github.com/jimfb/4faa6cbfb1ef476bd105"> 详见</a>
+2. 后来我在 <a href="https://github.com/callemall/material-ui/issues/2818"> 这里 </a> 又看到,
+   删掉   node_modules/material-ui/node_modules/react 感觉有点坑啊...!!
 
 - Error during WebSocket handshake: Unexpected response code: 400
 
