@@ -13,8 +13,7 @@ export default class RegTextFile extends Component {
         this.state = {
             input_err: undefined,
             pwd_err: undefined,
-            rpwd_err: undefined,
-            btn_disabled: true
+            rpwd_err: undefined
         }
     }
 
@@ -22,36 +21,63 @@ export default class RegTextFile extends Component {
         return { muiTheme: getMuiTheme(baseTheme) };
     }
     
-    _onChange(e, value){
-        let name = this.refs.username;
-        let pwd = this.refs.password;
-        let rpwd = this.refs.repassword;
+    // _onChange(e, value){
+    //     let name = this.refs.username;
+    //     let pwd = this.refs.password;
+    //     let rpwd = this.refs.repassword;
         
-        let name_length = name.getValue().length;
-        let pwd_length = pwd.getValue().length;
+    //     let name_length = name.getValue().length;
+    //     let pwd_length = pwd.getValue().length;
+    //     console.log(name_length, pwd_length);
+    //     if (name_length < 2 || name_length > 20) {
+    //         this.setState({input_err: "用户名需要大于2个字符小于20个字符"});
+    //     } else {
+    //         this.setState({input_err: undefined});
+    //     }
+    //     if (pwd_length < 6 || pwd_length > 12) {
+    //         this.setState({pwd_err: "密码应大于6位小于12位"});
+    //     } else {
+    //         this.setState({pwd_err: undefined});
+    //     }
+    //     if(pwd.getValue() != rpwd.getValue()) {
+    //         this.setState({rpwd_err: "两次密码不一致"});
+    //     } else {
+    //         this.setState({rpwd_err: undefined});
+    //     }
+        
+    //     if(name_length >=2 && name_length <= 20 && pwd_length >=6 && pwd_length <= 12 
+    //         && pwd.getValue() == rpwd.getValue()) {
+    //         this.setState({btn_disabled: false})
+    //     } else{
+    //         this.setState({btn_disabled: true})
+    //     }
+    // }
+    
+    validCheck(username, password, repassword){
+        
+        let name_length = username.length;
+        let pwd_length = password.length;
+      
         console.log(name_length, pwd_length);
         if (name_length < 2 || name_length > 20) {
             this.setState({input_err: "用户名需要大于2个字符小于20个字符"});
+            return false;
         } else {
             this.setState({input_err: undefined});
         }
         if (pwd_length < 6 || pwd_length > 12) {
             this.setState({pwd_err: "密码应大于6位小于12位"});
+            return false;
         } else {
             this.setState({pwd_err: undefined});
         }
-        if(pwd.getValue() != rpwd.getValue()) {
+        if(password !== repassword) {
             this.setState({rpwd_err: "两次密码不一致"});
+            return false;
         } else {
             this.setState({rpwd_err: undefined});
         }
-        
-        if(name_length >=2 && name_length <= 20 && pwd_length >=6 && pwd_length <= 12 
-            && pwd.getValue() == rpwd.getValue()) {
-            this.setState({btn_disabled: false})
-        } else{
-            this.setState({btn_disabled: true})
-        }
+        return true;
     }
 
     render() {
@@ -70,7 +96,6 @@ export default class RegTextFile extends Component {
                     type="text"
                     ref="username"
                     errorText={this.state.input_err}
-                    onChange = { this._onChange.bind(this)}
                     /><br />
                 <TextField
                     hintText="6-12英文和数字"
@@ -78,7 +103,6 @@ export default class RegTextFile extends Component {
                     type="password"
                     ref="password"
                     errorText={this.state.pwd_err}
-                    onChange = { this._onChange.bind(this)}
                     /><br />
                 <TextField
                     hintText="  确认密码, 6-12英文和数字"
@@ -86,16 +110,19 @@ export default class RegTextFile extends Component {
                     type="password"
                     ref="repassword"
                     errorText={this.state.rpwd_err}
-                    onChange = { this._onChange.bind(this)}
                     /><br />
                 <RaisedButton onMouseDown = {
                         e => {
                         let username = this.refs.username.getValue();
                         let password = this.refs.password.getValue();
+                        let repassword = this.refs.repassword.getValue();
+                        if (!this.validCheck.bind(this)(username, password, repassword)) {
+                            return ;
+                        }
                         console.log('login', username, password);
                         handleRegister(username, password);
                     }
-                } label="注册" ref="btn_reg" disabled={this.state.btn_disabled}/>
+                } label="注册" ref="btn_reg" />
             </div>
         )
     }
