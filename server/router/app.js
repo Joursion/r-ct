@@ -7,6 +7,7 @@ var User =  require('../lib/user.js');
 var Token = require('../lib/token');
 var uuid = require('node-uuid');
 var md5 = require('./src/md5');
+var emoji = require('emoji');
 
 module.exports = function (app, router) {
 
@@ -76,9 +77,12 @@ module.exports = function (app, router) {
     });
 
     router.get('/api/message', function *() {
+        var messageContent = yield Message.getMessage();
+        //console.log(emoji.unifiedToHTML('jintian wo henbma' + messageContent));
+       // var emojied = emoji.unifiedToHTML(messageContent.content);
         var getedData = {
              "success": "true",
-             "data": yield Message.getMessage()
+             "data": messageContent
         };
         this.status = 200;
         this.type = 'application/json';

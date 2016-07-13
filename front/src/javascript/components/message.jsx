@@ -46,7 +46,8 @@ export default class Message extends Component {
                 borderRadius: 20,
                 border: "1px solid #000000",
                 padding: "4px 10px",
-                marginTop: 10
+                marginTop: 10,
+                blod: "bloder"
             },
             content: {
                 display: "flex",

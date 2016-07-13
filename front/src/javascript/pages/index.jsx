@@ -5,6 +5,7 @@ import Avatar from '../components/avatar.jsx';
 import InputBox from '../components/inputBox.jsx';
 import MessageBox from '../components/messageBox.jsx';
 import User from '../components/user.jsx';
+import FriendList from '../components/recent.jsx';
 //import Login from './pages/login.jsx';
 
 /*material components*/
@@ -38,6 +39,9 @@ export default class Index extends Component {
                 marginRight: "1em",
                 height: 500
             },
+            list: {
+                marginTop: 50
+            },
             side_bar: {
                 display: "flex",
                 flex: 1,
@@ -65,6 +69,7 @@ export default class Index extends Component {
             <container style = {style.container}>
                 <div className = "side_bar" style = { style.side_bar }>
                     <User username={user.username} avatar={user.avatar} isLogin = {isLogin}/>
+                    <FriendList style = { style.list }/>
                 </div>
                 <div style = { style.content }>
                     <MessageBox style = {style.msgBox} message = { message }/>
